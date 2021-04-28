@@ -49,4 +49,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Blog::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_users')
+        // ->wherePivot('id',1)
+        ->withTimestamps();
+    }
 }

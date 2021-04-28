@@ -25,13 +25,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/users', function () {
-//     $users = \App\Models\User::select('id','name')->get();
-    
-//     foreach($data as $key => $value){
-//         dd($data);
-//     }
+Route::get('/test', function () {
+    $user = \App\Models\User::find(1);   
+   
+    foreach ($user->roles as $role) {
+        // echo "ddd".$role->pivot->created_at;
+        // dd($role->role);
+    }
+    dd($user->roles);
 
-// });
+});
 Route::resource('users', App\Http\Controllers\UserController::class);
 
