@@ -76,6 +76,15 @@
         </nav>
 
         <main class="py-4">
+            @if(session('response'))
+                @php
+                    $message = ( isset ( session('response')['message'] ) ) ?  session('response')['message'] : ''; 
+                    $status = ( isset ( session('response')['status'] ) ) ?  session('response')['status'] : 'success';
+                @endphp 
+                <div class="alert alert-{{ $status }}">
+                    {{ $message }}
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>
