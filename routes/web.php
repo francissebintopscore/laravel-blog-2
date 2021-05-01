@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +39,22 @@ Route::get('/test', function () {
         'slug' => Str::slug( $tag )
     ]);
 
+});
+
+Route::get('/tag/search', function (Request $request) {
+    
+    $tags = App\Models\Tag::where('name', 'like', '%'.$request->search.'%')
+            ->select( 'id', 'name', 'slug' )
+            ->orderBy('name')
+            ->limit(7)
+            ->get();
+    $jsonValue = $tags->toJson();
+    echo $jsonValue;
+    // dd($tags);
+    // echo $request->search;
+    // foreach ( $tags as $tag ){
+    //     echo "<br>".$tag->name;
+    // }
 });
 Route::resource('users', App\Http\Controllers\UserController::class);
 Route::resource('blogs', App\Http\Controllers\BlogController::class);

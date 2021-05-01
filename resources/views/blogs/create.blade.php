@@ -17,3 +17,7 @@
     </div>
 </div>
 @endsection
+
+@section('au-script')
+<script type="text/javascript" src="{{ asset('js/blogs.js') }}"></script>
+@endsection

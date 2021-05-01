@@ -18,7 +18,12 @@ class Blog extends Model
 
     public function setTitleAttribute($value){
         $this->attributes['title'] = $value;
-        $this->attributes['slug'] = Str::slug( $value );
+        $slug = Str::slug( $value );
+        // if( $this->where( 'slug', $slug )->exists() ){
+        //     $slug .= '-'.$this->attributes['id'];
+        // }
+
+        $this->attributes['slug'] = $slug;
     }
 
     public function user()

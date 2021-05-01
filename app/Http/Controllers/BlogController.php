@@ -55,8 +55,19 @@ class BlogController extends Controller
     public function store(BlogRequest $request)
     {
         
+        // dd($request);
 
-        auth()->user()->blogs()->create( $request->all() );
+        $blog = auth()->user()->blogs()->create( $request->all() );
+
+        $tag = \App\Models\Tag::inRandomOrder()
+                                ->limit(2)
+                                ->pluck('id');
+        
+        foreach( $tag as $id ){
+            $blog->tags()->attach($id);  
+        }
+        
+ 
         $response = array(
             'message'=>'Blog posted sucessfully',
         );
@@ -117,6 +128,10 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
+
+        foreach ( $blog->tags as $tag){
+            $blog->tags()->detach($tag->id);
+        }
         $blog->delete();
         $response = array(
             'message'=>'Blog deleted sucessfully',
