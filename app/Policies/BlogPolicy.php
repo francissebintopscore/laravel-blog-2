@@ -28,7 +28,7 @@ class BlogPolicy
      * @param  \App\Models\Blog  $blog
      * @return mixed
      */
-    public function view(User $user, Blog $blog)
+    public function view(?User $user, Blog $blog)
     {
         return true;
     }

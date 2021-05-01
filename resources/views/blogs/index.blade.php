@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <h2>
-                    <a href="/blogs/{{$blog->slug}}">
+                    <a href="/blogs/{{$blog->id}}">
                         {{ $blog->title }}
                     </a>
                 </h2>

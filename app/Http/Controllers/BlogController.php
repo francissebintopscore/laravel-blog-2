@@ -87,9 +87,9 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Blog $blog)
     {
-        $blog = Blog::firstOrFail($id);
+        // $blog = Blog::firstOrFail($id);
         return view('blogs/show',compact('blog'));
     }
 

@@ -4,19 +4,23 @@
         <div class="card">
             <div class="card-body">
                 <h2>{{ $blog->title }}</h2>
-                <span class="badge badge-info">{{ $blog->user->name }}</span>
+                @foreach ( $blog->tags as $tag )
+                    <span class="badge badge-info">{{ $tag->name }}</span>
+                @endforeach
                 <div>{{ $blog->body }}</div>
             </div>  
         </div>
         <div class="text-right">
-                    @can('create', App\Models\Blog::class)
+                    @can('update', $blog)
                         <a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">Edit</a>
                     @endcan
+                    @can('delete', $blog)
                         <form action="/blogs/{{$blog->id}}" method="POST" style="display:inline-block;">
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-danger">Delete</button>
                         </form>
+                    @endcan
                 </div>
 </div>
 dd(DB::getQueryLog())}}

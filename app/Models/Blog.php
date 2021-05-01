@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class Blog extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     protected $fillable = [
         'title',
@@ -18,12 +20,25 @@ class Blog extends Model
 
     public function setTitleAttribute($value){
         $this->attributes['title'] = $value;
-        $slug = Str::slug( $value );
+        // $slug = Str::slug( $value );
         // if( $this->where( 'slug', $slug )->exists() ){
         //     $slug .= '-'.$this->attributes['id'];
         // }
-
+        $slug = SlugService::createSlug($this, 'slug', $value);
         $this->attributes['slug'] = $slug;
+    }
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 
     public function user()
