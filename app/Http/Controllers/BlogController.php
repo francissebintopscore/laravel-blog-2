@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Blog;
 use App\Http\Requests\BlogRequest;
+use App\Events\BlogCreated;
 
 class BlogController extends Controller
 {
@@ -67,7 +68,7 @@ class BlogController extends Controller
             $blog->tags()->attach($id);  
         }
         
- 
+        event( new BlogCreated( $blog->title ) );
         $response = array(
             'message'=>'Blog posted sucessfully',
         );

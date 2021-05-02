@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BlogCreatedEmail;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,21 +28,25 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::get('/test', function () {
+
+    // Mail::raw('This is test',function($message){
+    //     $message->to('admin@localhost.com')
+    //             ->subject('Test');
+    // });
+    // Mail::to('topscoretopscore@gmail.com')->send( new BlogCreatedEmail('Dynamic content'));
+    echo "Hai";
     // $user = App\Models\User::find(1);   
+    // $user = Auth::user();  
    
     // foreach ($user->roles as $role) {
         // echo "ddd".$role->pivot->created_at;
-        // dd($role->role);
+        // dd($user->roles);
     // }
-    // dd($user->roles);
-    $blog = App\Models\Blog::find(1); 
-    $tag = Str::random(10);
-    $blog->tags()->create([
-        'name' => $tag,
-        'slug' => Str::slug( $tag )
-    ]);
-
-});
+    // $user = Auth::user();
+    // $user->hasRole('superadmin');
+})
+->middleware('super_admin:superadmin')
+->name('test');
 
 Route::get('/tag/search', function (Request $request) {
     
