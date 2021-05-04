@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
     @can('create', App\Models\Blog::class)
-                        <a href="/blogs/create" class="btn btn-success">Create</a>
+                        <a href="/blogs/create" class="btn btn-success">{{__('buttons.Create')}}</a>
                     @endcan
     </div>
     @foreach ($blogs as $blog)
@@ -18,13 +18,13 @@
                 <div>{{ $blog->body }}</div>
                 <div class="text-right">
                     @can('update', $blog)
-                        <a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">Edit</a>
+                        <a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">{{__('buttons.Edit')}}</a>
                     @endcan
                     @can('delete', $blog)
                         <form action="/blogs/{{$blog->id}}" method="POST" style="display:inline-block;">
                             @method('DELETE')
                             @csrf
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger">{{__('buttons.Delete')}}</button>
                         </form>
                     @endcan
                 </div>

@@ -12,13 +12,13 @@
         </div>
         <div class="text-right">
                     @can('update', $blog)
-                        <a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">Edit</a>
+                        <a href="/blogs/{{ $blog->id }}/edit" class="btn btn-warning">{{__('buttons.Edit')}}</a>
                     @endcan
                     @can('delete', $blog)
                         <form action="/blogs/{{$blog->id}}" method="POST" style="display:inline-block;">
                             @method('DELETE')
                             @csrf
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger">{{__('buttons.Delete')}}</button>
                         </form>
                     @endcan
                 </div>

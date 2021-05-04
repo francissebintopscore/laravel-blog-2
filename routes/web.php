@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BlogCreatedEmail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +25,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::get('/test', function () {
@@ -63,6 +64,17 @@ Route::get('/tag/search', function (Request $request) {
     //     echo "<br>".$tag->name;
     // }
 });
-Route::resource('users', App\Http\Controllers\UserController::class);
-Route::resource('blogs', App\Http\Controllers\BlogController::class);
+
+/**
+ * 
+ * https://laraveldaily.com/multi-language-routes-and-locales-with-auth/
+ */
+// Route::group([
+//     'prefix' => '{locale}', 
+//     'where' => ['locale' => '[a-zA-Z]{2}'], 
+//     'middleware' => 'setlocale'], function() {
+
+// });
+Route::resource('users', \App\Http\Controllers\UserController::class);
+Route::resource('blogs', \App\Http\Controllers\BlogController::class);
 

@@ -9,7 +9,7 @@
             @include('blogs.form')
 
             <div class="text-right">
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary">{{__('buttons.Add')}}</button>
             </div>
 
         </form>
