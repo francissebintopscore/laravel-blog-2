@@ -6,8 +6,10 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BlogCreatedEmail;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,9 +37,13 @@ Route::get('/test', function () {
     //             ->subject('Test');
     // });
     // Mail::to('topscoretopscore@gmail.com')->send( new BlogCreatedEmail('Dynamic content'));
-    echo "Hai";
-    // $user = App\Models\User::find(1);   
-    // $user = Auth::user();  
+
+
+    $tt = '\App\Models\Story';
+    $taggable_id = $tt::inRandomOrder()->limit(1)->pluck('id');
+    echo$taggable_id->first();
+    // $user = App\Models\User::find(1);
+    // $user = Auth::user();
    
     // foreach ($user->roles as $role) {
         // echo "ddd".$role->pivot->created_at;
@@ -50,31 +56,24 @@ Route::get('/test', function () {
 ->name('test');
 
 Route::get('/tag/search', function (Request $request) {
-    
-    $tags = App\Models\Tag::where('name', 'like', '%'.$request->search.'%')
-            ->select( 'id', 'name', 'slug' )
+    $tags = Tag::where('name', 'like', '%'.$request->search.'%')
+            ->select('id', 'name', 'slug')
             ->orderBy('name')
             ->limit(7)
             ->get();
     $jsonValue = $tags->toJson();
     echo $jsonValue;
-    // dd($tags);
-    // echo $request->search;
-    // foreach ( $tags as $tag ){
-    //     echo "<br>".$tag->name;
-    // }
 });
 
 /**
- * 
+ *
  * https://laraveldaily.com/multi-language-routes-and-locales-with-auth/
  */
 // Route::group([
-//     'prefix' => '{locale}', 
-//     'where' => ['locale' => '[a-zA-Z]{2}'], 
+//     'prefix' => '{locale}',
+//     'where' => ['locale' => '[a-zA-Z]{2}'],
 //     'middleware' => 'setlocale'], function() {
 
 // });
 Route::resource('users', \App\Http\Controllers\UserController::class);
 Route::resource('blogs', \App\Http\Controllers\BlogController::class);
-

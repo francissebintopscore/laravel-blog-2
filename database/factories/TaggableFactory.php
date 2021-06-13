@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Tag;
 use App\Models\Taggable;
+use App\Models\Blog;
+use App\Models\Story;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TaggableFactory extends Factory
@@ -22,13 +24,19 @@ class TaggableFactory extends Factory
      */
     public function definition()
     {
-        $tag = Tag::select('id')->inRandomOrder()->limit(1)->get();
-        
+        $tagId          = Tag::inRandomOrder()->limit(1)->pluck('id');
+
+        $taggableType   = array(
+                            'App\Models\Blog',
+                            'App\Models\Story'
+                        );
+        $taggableType   = '\\'. $taggableType[rand(0, 1)];
+        $taggableId     = $taggableType ::inRandomOrder()->limit(1)->pluck('id');
 
         return [
-            'tag_id'        => $tag,
-            'taggable_id'   => $title,
-            'taggable_type' => $this->faker->realText(),
+            'tag_id'        => $tagId->first(),
+            'taggable_id'   => $taggableId->first(),
+            'taggable_type' => $taggableType,
         ];
     }
 }
